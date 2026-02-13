@@ -30,3 +30,23 @@ x, y, z = "Orange", "Banana", "Cherry"
 print(x)
 print(y)
 print(z)
+
+
+import random
+
+print(random.randrange(1, 10))
+ #string iteration 
+for x in "banana":
+  print(x)
+#Check if "expensive" is NOT present in the string:
+  txt = "The best things in life are free!"
+if "expensive" not in txt:
+  print("No, 'expensive' is NOT present.")
+if "life" in txt:
+  print("Yes, 'life' is present.")
+
+  #this is the concetatntion in python 
+  a = "Hello"
+b = "World"
+c = a + " " + b
+print(c)
