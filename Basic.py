@@ -50,3 +50,25 @@ if "life" in txt:
 b = "World"
 c = a + " " + b
 print(c)
+
+# Arithmetic operators (+, -, *, /, %, **, //)
+# Assignment operators (=, +=, -=, *=, /=, %=, **=, //=)
+# Comparison operators (==, !=, >, <, >=, <=)
+# Logical operators (and, or, not)
+# Identity operators (is, is not)
+# Membership operators (in, not in)
+# Bitwise operators (&, |, ^, ~, <<, >>)
+
+g = 10
+h = 5
+print(g + h)  # Addition
+print(g - h)  # Subtraction
+print(g * h)  # Multiplication
+print(g / h)  # Division
+print(g % h)  # Modulus
+print(g ** h) # Exponentiation
+print(g // h) # Floor division
+if(g > h and g != h):
+    print("g is greater than h and they are not equal.")
+if(g > h or g == h):
+    print("g is greater than h or they are equal.")
