@@ -72,3 +72,5 @@ if(g > h and g != h):
     print("g is greater than h and they are not equal.")
 if(g > h or g == h):
     print("g is greater than h or they are equal.")
+
+    fruits = ("apple", "banana", "cherry")
