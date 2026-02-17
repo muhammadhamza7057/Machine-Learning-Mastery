@@ -74,3 +74,13 @@ if(g > h or g == h):
     print("g is greater than h or they are equal.")
 
     fruits = ("apple", "banana", "cherry")
+
+    thistuple = ("apple", "banana", "cherry")
+i = 0
+while i < len(thistuple):
+  print(thistuple[i])
+  i = i + 1
+
+  fruits = ('apple', 'banana', 'cherry')
+(x, *y) = fruits
+print(y)
