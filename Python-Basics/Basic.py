@@ -84,3 +84,8 @@ while i < len(thistuple):
   fruits = ('apple', 'banana', 'cherry')
 (x, *y) = fruits
 print(y)
+
+# Sets is the collection which is unordered and unindexed. In Python sets are written with curly brackets.
+# Set items are unchangeable, but you can remove and/or add items whenever you like
+myset = {"apple", "banana", "cherry"}
+print(myset)
