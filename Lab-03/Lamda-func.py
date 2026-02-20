@@ -1,19 +1,23 @@
 # The Lamda Function Task 02
+print("Task 02: Lambda Function Example - Squaring a number")
 def square(x):
     return x * x   
 print(square(5))
 
 # The Task 03 is also here
+print("\nTask 03: Lambda Function Example - Squaring a number using lambda")
 number = lambda b: b * b
 print(number(3))
 
 
 # Using the for loop to print from 1 to 100 random numbers Task 04
+print("\nTask 04: Printing 4 random numbers between 1 and 100")
 import random
 for i in range(1, 5):
     print(random.randint(1, 100))
     
 # Using yield with generator function for fibonacci series Task 05
+print("\nTask 05: Fibonacci Series using yield")
 def fibonacci(n):
     a, b = 0, 1
     for _ in range(n):
