@@ -1,8 +1,12 @@
 """
-Task-03: A* Algorithm Implementation
-====================================
-This task implements the A* (A-Star) algorithm to find the minimum-cost path
-from source node S to goal node G using edge weights and a heuristic function.
+Task-03: A* + Greedy Best-First Search Implementation
+=====================================================
+This task implements two informed search algorithms:
+1. A* (A-Star)
+2. Greedy Best-First Search (GBFS)
+
+Both algorithms use a heuristic function to guide search from source node S
+to goal node G.
 
 A* Formula: f(n) = g(n) + h(n)
 where:
@@ -10,11 +14,15 @@ where:
     - h(n) = heuristic estimate of cost from node n to goal
     - f(n) = estimated total cost through node n
 
+Greedy Best-First Formula: f(n) = h(n)
+where:
+    - It only uses heuristic estimate (ignores path cost so far)
+
 Heuristics:
 A heuristic must be admissible (never overestimate actual distance).
 This example uses predefined heuristic values based on node layout.
 
-Data Structure Used:
+Data Structures Used:
 - Priority Queue (implemented using heapq module)
 """
 
@@ -110,7 +118,7 @@ def a_star_find_path(graph, start, goal):
     # Priority queue stores tuples: (f_value, counter, node, g_value)
     # counter ensures FIFO for nodes with same f_value
     open_set = []
-    heapq.heappush(open_set, (0, 0, start, 0))  # (f, counter, node, g)
+    heapq.heappush(open_set, (heuristic(start), 0, start, 0))  # (f, counter, node, g)
     
     visited = set()           # Track nodes we've fully explored
     g_values = {start: 0}     # Actual cost from start to each node
@@ -189,23 +197,128 @@ def a_star_find_path(graph, start, goal):
     return None, float('inf'), expanded_count
 
 
+def greedy_best_first_find_path(graph, start, goal):
+    """
+    Greedy Best-First Search (GBFS) to find a path from start to goal.
+
+    Algorithm:
+    1. Use a priority queue ordered only by heuristic h(n)
+    2. Always expand the node that appears closest to the goal
+    3. Track parent nodes to reconstruct the path
+
+    Note: GBFS is usually faster in practice but NOT guaranteed optimal,
+    because it ignores the actual path cost g(n).
+
+    Args:
+        graph: Adjacency list representation of the graph
+        start: Starting node
+        goal: Goal node
+
+    Returns:
+        A tuple (path, total_cost, expanded_nodes) where:
+        - path: List of nodes from start to goal, or None if no path exists
+        - total_cost: Total cost of the returned path
+        - expanded_nodes: Number of nodes expanded during search
+    """
+
+    # Priority queue stores: (h_value, counter, node)
+    open_set = []
+    heapq.heappush(open_set, (heuristic(start), 0, start))
+
+    visited = set()
+    parent = {start: None}
+    g_values = {start: 0}  # Track actual cost only for reporting path cost
+    expanded_count = 0
+    counter = 1
+
+    print("\n" + "=" * 70)
+    print("Greedy Best-First Search (GBFS)")
+    print("=" * 70)
+    print(f"Start: {start}, Goal: {goal}")
+
+    while open_set:
+        h_value, _, current = heapq.heappop(open_set)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+        expanded_count += 1
+
+        print(f"\nExpanding: {current}")
+        print(f"  h({current}) = {h_value} (heuristic estimate)")
+
+        if current == goal:
+            print(f"\n✓ Goal '{goal}' found!")
+
+            path = []
+            node = goal
+            while node is not None:
+                path.append(node)
+                node = parent[node]
+            path.reverse()
+
+            return path, g_values[goal], expanded_count
+
+        for neighbor_node, edge_weight in graph.get(current, []):
+            if neighbor_node in visited:
+                continue
+
+            if neighbor_node not in parent:
+                parent[neighbor_node] = current
+                g_values[neighbor_node] = g_values[current] + edge_weight
+            else:
+                # If already discovered, keep the cheaper parent for reporting.
+                new_cost = g_values[current] + edge_weight
+                if new_cost < g_values[neighbor_node]:
+                    g_values[neighbor_node] = new_cost
+                    parent[neighbor_node] = current
+
+            h_neighbor = heuristic(neighbor_node)
+            heapq.heappush(open_set, (h_neighbor, counter, neighbor_node))
+            counter += 1
+
+            print(f"  → Added to queue: {neighbor_node} with h-value {h_neighbor}")
+
+    print(f"\n✗ No path found from {start} to {goal}")
+    return None, float('inf'), expanded_count
+
+
 # Main execution
 if __name__ == "__main__":
     start_node = 'S'
     goal_node = 'G'
     
-    print("\nFinding MINIMUM-COST path from", start_node, "to", goal_node)
-    print("(Using edge weights and heuristic function)")
+    print("\nFinding path from", start_node, "to", goal_node)
+    print("(Using informed search concepts with heuristics)")
     
     # Run A*
     a_star_path, a_star_cost, a_star_expanded = a_star_find_path(graph, start_node, goal_node)
+
+    # Run Greedy Best-First Search
+    greedy_path, greedy_cost, greedy_expanded = greedy_best_first_find_path(graph, start_node, goal_node)
     
     print("\n" + "=" * 70)
+    print("Final Summary")
+    print("=" * 70)
+
+    print("\nA* Result:")
     if a_star_path:
-        print(f"Path found: {' -> '.join(a_star_path)}")
-        print(f"Total path cost: {a_star_cost}")
+        print(f"  Path found: {' -> '.join(a_star_path)}")
+        print(f"  Total path cost: {a_star_cost}")
     else:
-        print(f"No path found from {start_node} to {goal_node}")
-    
-    print(f"Nodes expanded: {a_star_expanded}")
+        print(f"  No path found from {start_node} to {goal_node}")
+    print(f"  Nodes expanded: {a_star_expanded}")
+
+    print("\nGreedy Best-First Result:")
+    if greedy_path:
+        print(f"  Path found: {' -> '.join(greedy_path)}")
+        print(f"  Total path cost: {greedy_cost}")
+    else:
+        print(f"  No path found from {start_node} to {goal_node}")
+    print(f"  Nodes expanded: {greedy_expanded}")
+
+    print("\nComparison Note:")
+    print("  A* uses g(n) + h(n), so it is optimal with admissible heuristic.")
+    print("  Greedy uses only h(n), so it may be faster but not always optimal.")
     print("=" * 70)
