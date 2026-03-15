@@ -341,3 +341,12 @@ g = 33
 h = 500
 if y > g and h > y:
   print("Both conditions are True")
+  
+  username = "Tobias"
+password = "secret123"
+is_verified = True
+
+if username and password and is_verified:
+  print("Login successful")
+else:
+  print("Login failed")
