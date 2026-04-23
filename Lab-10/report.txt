@@ -1,0 +1,45 @@
++------------------------------------------------------------+
+|                STUDENT RECORD CHECK REPORT                 |
++------------------------------------------------------------+
+
+Summary
+-------
++----------------+-------+
+| Metric         | Value |
++----------------+-------+
+| Total students | 6     |
+| Marks below 12 | 3     |
+| Invalid emails | 2     |
++----------------+-------+
+
+Students scoring below 12
+-------------------------
++---------+-------+---------------------+
+| Name    | Marks | Email               |
++---------+-------+---------------------+
+| Bilal   | 10.0  | bilal@example.com   |
+| Chinmay | 11.0  | chinmay.example.com |
+| Farhan  | 8.0   | farhan@school       |
++---------+-------+---------------------+
+
+Students with invalid email addresses
+-------------------------------------
++---------+-------+---------------------+
+| Name    | Marks | Email               |
++---------+-------+---------------------+
+| Chinmay | 11.0  | chinmay.example.com |
+| Farhan  | 8.0   | farhan@school       |
++---------+-------+---------------------+
+
+Validation details
+------------------
++---------+-------+---------------------+-------------+---------------+
+| Name    | Marks | Email               | Mark Status | Email Status  |
++---------+-------+---------------------+-------------+---------------+
+| Ayesha  | 18.0  | ayesha@example.com  | OK          | VALID EMAIL   |
+| Bilal   | 10.0  | bilal@example.com   | LOW MARK    | VALID EMAIL   |
+| Chinmay | 11.0  | chinmay.example.com | LOW MARK    | INVALID EMAIL |
+| Dua     | 15.0  | dua@university.edu  | OK          | VALID EMAIL   |
+| Farhan  | 8.0   | farhan@school       | LOW MARK    | INVALID EMAIL |
+| Hira    | 12.0  | hira@college.org    | OK          | VALID EMAIL   |
++---------+-------+---------------------+-------------+---------------+
